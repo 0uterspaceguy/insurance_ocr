@@ -1,0 +1,27 @@
+version: '2.3'
+
+services:
+    ocr_api:
+        container_name: ocr_api
+        image: ocr_api:latest
+        ipc: host
+        network_mode: host
+        ports:
+        - '5000:5000'
+        restart: always
+    triton:
+        container_name: triton
+        image: nvcr.io/nvidia/tritonserver:21.12-py3
+        ipc: host
+        runtime: nvidia
+        shm_size: 1g
+        ports:
+            - '8000:8000'
+            - '8001:8001'
+            - '8002:8002'
+        volumes:
+            - "/home/outerspaceguy/Desktop/PPs/ml_template/triton_models:/models"
+        command: tritonserver --model-repository=/models --strict-model-config=false
+        restart: always
+ 
+
