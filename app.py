@@ -1,6 +1,6 @@
 import logging
 import uvicorn
-from fastapi import FastAPI, Request, Response, status
+from fastapi import FastAPI, Request, Response, status, File, UploadFile
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
@@ -30,10 +30,12 @@ primary = TritonInference(
 
 @app.post("/recognize")
 async def recognize(
-    request: Request,
+    # request: Request,
+    file: UploadFile = File(...)
 ):
     try:
-        data = await request.body()
+        # data = await request.body()
+        data = file.file.read()
         decoded_img = cv2.imdecode(np.fromstring(data, dtype=np.uint8), 1)
 
     except Exception as ex:

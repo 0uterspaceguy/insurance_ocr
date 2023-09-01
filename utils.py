@@ -102,7 +102,11 @@ def rescale_boxes(boxes,
     return boxes
 
 
-def ocr(orig_bgr_image, num_box, sum_box):
+def ocr(orig_bgr_image,
+        num_box,
+        sum_box,
+        num_alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+        sum_alphabet = '0123456789.,'):
     num_box = [int(var) for var in num_box]
     sum_box = [int(var) for var in sum_box]
 
@@ -116,9 +120,11 @@ def ocr(orig_bgr_image, num_box, sum_box):
     num_string = postprocess_tes(num_string)
     sum_string = postprocess_tes(sum_string)
 
-    num_string_pattern = re.findall(r'\D\D\D\d\d\d\d\d\d\d\d\d\d', num_string)
+    num_string_pattern = re.findall(r'\D{1,5}\d{3,10}', num_string)
     num_string =  num_string_pattern[0] if len(num_string_pattern) else num_string
 
+    num_string = ''.join([char for char in num_string if char in num_alphabet])
+    sum_string = ''.join([char for char in sum_string if char in sum_alphabet])
 
     return num_string, sum_string
 
