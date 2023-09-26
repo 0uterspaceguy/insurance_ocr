@@ -24,7 +24,10 @@ def preprocess_yolo(image, input_shape=(640,640)):
     # Scale input pixel values to 0 to 1
     input_img = input_img / 255.0
     input_img = input_img.transpose(2, 0, 1)
-    input_tensor = input_img[np.newaxis, :, :, :].astype(np.float32)
+    # input_tensor = input_img[np.newaxis, :, :, :].astype(np.float32)
+    input_tensor = input_img.astype(np.float32)
+
+    
 
     return input_tensor
 
@@ -105,7 +108,7 @@ def rescale_boxes(boxes,
 def ocr(orig_bgr_image,
         num_box,
         sum_box,
-        num_alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+        num_alphabet = 'AБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
         sum_alphabet = '0123456789.,'):
     num_box = [int(var) for var in num_box]
     sum_box = [int(var) for var in sum_box]
@@ -114,8 +117,10 @@ def ocr(orig_bgr_image,
     num_crop = img_rgb[num_box[1]:num_box[3], num_box[0]:num_box[2], :]
     sum_crop = img_rgb[sum_box[1]:sum_box[3], sum_box[0]:sum_box[2], :]
 
-    num_string = pytesseract.image_to_string(num_crop)
-    sum_string = pytesseract.image_to_string(sum_crop)
+
+    options = "-l {}".format('rus+eng')
+    num_string = pytesseract.image_to_string(num_crop, config=options)
+    sum_string = pytesseract.image_to_string(sum_crop, config=options)
 
     num_string = postprocess_tes(num_string)
     sum_string = postprocess_tes(sum_string)
@@ -128,7 +133,7 @@ def ocr(orig_bgr_image,
 
     return num_string, sum_string
 
-def postprocess_tes(string, alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.'):
+def postprocess_tes(string, alphabet='AБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.'):
     string = string.replace('\n', '')
     string = string.replace('\x0c', '')
     for char in string:

@@ -17,5 +17,6 @@ COPY --from=builder /install /usr/local
 WORKDIR /opt/app
 COPY . .
 RUN chmod +x entrypoint.sh
+RUN cp /opt/app/tess/rus.traineddata /usr/share/tesseract-ocr/4.00/tessdata/rus.traineddata
 
 ENTRYPOINT ["./entrypoint.sh"]

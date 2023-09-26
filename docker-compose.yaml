@@ -20,7 +20,7 @@ services:
             - '8001:8001'
             - '8002:8002'
         volumes:
-            - "/home/outerspaceguy/Desktop/PPs/ml_template/triton_models:/models"
+            - "/home/outerspaceguy/Desktop/PPs/insurance_ocr/triton_models:/models"
         command: tritonserver --model-repository=/models --strict-model-config=false
         restart: always
  
