@@ -7,13 +7,13 @@ services:
         ipc: host
         network_mode: host
         ports:
-        - '5000:5000'
+        - '5005:5005'
         restart: always
     triton:
         container_name: triton
         image: nvcr.io/nvidia/tritonserver:21.12-py3
         ipc: host
-        runtime: nvidia
+        # runtime: nvidia
         shm_size: 1g
         ports:
             - '8000:8000'

@@ -118,7 +118,9 @@ def ocr(orig_bgr_image,
     sum_crop = img_rgb[sum_box[1]:sum_box[3], sum_box[0]:sum_box[2], :]
 
 
-    options = "-l {}".format('rus+eng')
+    # options = "-l {}".format('rus+eng')
+    options = "-l {}".format('eng')
+
     num_string = pytesseract.image_to_string(num_crop, config=options)
     sum_string = pytesseract.image_to_string(sum_crop, config=options)
 
