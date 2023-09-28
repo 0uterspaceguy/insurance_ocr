@@ -35,7 +35,7 @@ sudo docker compose up
 Пример отправки запроса:
 
 ```
-curl -L -F  "file=@ex.png" http://0.0.0.0:5000/recognize/
+curl -L -F  "file=@ex.png" http://0.0.0.0:5005/recognize/
 ```
 
 
