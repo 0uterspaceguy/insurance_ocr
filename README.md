@@ -17,6 +17,13 @@ sudo docker build -t ocr_api .
 sudo docker pull nvcr.io/nvidia/tritonserver:21.12-py3
 ```
 
+Прописываем глобальный путь до моделей в docker-compose.yaml:
+
+```bash
+ volumes:
+    - "[путь до папки triton_models]:/models"
+```
+
 Поднимаем сервис:
 
 ```
